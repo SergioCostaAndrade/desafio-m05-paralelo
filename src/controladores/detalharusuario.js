@@ -1,5 +1,7 @@
 const detalharUsuario = async (req, res) => {
-    res.json('ola')
+  
+   const {senha, ...usuario } = req.usuario 
+    res.json(usuario)
   }
   
   module.exports = detalharUsuario

@@ -20,14 +20,17 @@ const usuarioLogado = async (req, res, next) => {
     try {
         const { id } = jwt.verify(token, keyPrivada);
 
-        const { rows, rowCount } = await knex.query('usuarios').where({id: id}).first().debug();
+        //const { rows, rowCount } = await knex.query('usuarios').where({id: id}).first().debug();
+        const usuarioEncontrado = await knex('usuarios').where({id: id}).first().debug();
 
-        if (rowCount < 1) {
+        //if (rowCount < 1) {
+        if (usuarioEncontrado.length < 1) {
             return res.status(401).json({ Mensagem: 'Usuário não autorizado' })
         };
 
-        req.usuario = rows[0];
-
+       // req.usuario = rows[0];
+       req.usuario = usuarioEncontrado;
+console.log(req.usuario);
         next()
 
 
