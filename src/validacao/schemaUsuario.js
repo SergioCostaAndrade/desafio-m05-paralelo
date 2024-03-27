@@ -1,8 +1,7 @@
 const joi = require("joi");
 
 const schemaUsuario = joi.object({
-  nome: joi.string().required().messages({
-    "any.required": "O campo nome é obrigatório",
+  nome: joi.string().messages({
     "string.empty": "O campo nome é obrigatório",
   }),
 
@@ -16,15 +15,6 @@ const schemaUsuario = joi.object({
     "any.required": "O campo senha é obrigatório",
     "string.empty": "O campo senha é obrigatório",
     "string.min": "A senha precisa conter, no mínimo, 5 caracteres",
-  }),
-
-  idade: joi.number().positive().messages({
-    "number.positive": "O campo idade precisa ser um número positivo",
-    "number.base": "O campo idade precisa ser um número",
-  }),
-
-  ativo: joi.boolean().messages({
-    "boolean.base": "O campo ativo precisa ser um booleano",
   }),
 });
 

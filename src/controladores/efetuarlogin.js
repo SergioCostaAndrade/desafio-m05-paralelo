@@ -1,40 +1,36 @@
-const knex = require("../conexao");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-//const senhaHash = require("../senhaHash");
+const knex = require('../conexao');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const keyPrivada = process.env.KEY_DEVWEBTOKEN;
+
 const efetuarLogin = async (req, res) => {
   const { email, senha } = req.body;
 
-  if (!email || !senha) {
-    return res.status(404).json("É obrigatório email e senha");
-  }
-
   try {
-    const existeUsuario = await knex("usuarios").where("email", email);
-
-    if (existeUsuario.length === 0) {
-      return res.status(400).json("O usuario não foi encontrado");
+    if (!email || !senha) {
+      return res.status(400).json({ mensagem: 'É obrigatório fornecer email e senha' });
     }
-    const usuario = existeUsuario[0];
+
+    const usuario = await knex('usuarios').where({ email }).first();
+
+    if (!usuario) {
+      return res.status(401).json({ mensagem: 'Email incorreto ou inexistente' });
+    }
 
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaCorreta) {
-      return res.status(400).json("Email e senha não confere");
+      return res.status(401).json({ mensagem: 'Senha incorreta' });
     }
-    const token = jwt.sign({ id: usuario.id }, process.env.KEY_DEVWEBTOKEN, {
-      expiresIn: "8h",
-    });
 
-    const { senha: _, ...dadosUsuario } = usuario;
+    const token = jwt.sign({ id: usuario.id }, keyPrivada, { expiresIn: '1h' });
 
-    return res.status(200).json({
-      usuario: dadosUsuario,
-      token,
-    });
+    const dadosUsuario = { id: usuario.id, nome: usuario.nome, email: usuario.email, };
+
+    res.json({ dadosUsuario, token });
   } catch (error) {
-    return res.status(400).json(error.message);
+    console.log(error);
+    res.status(500).json({ mensagem: 'Erro interno do servidor' });
   }
 };
 
