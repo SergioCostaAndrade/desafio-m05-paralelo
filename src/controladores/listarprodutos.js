@@ -4,7 +4,7 @@ const listarProdutos = async (req, res) => {
     const { categoria_id } = req.query;
     let num = 0
     if (id) {
-    num = Number(id);
+    num = Number(categoria_id);
     if (!Number.isInteger(num) || num <= 0) {
       return res
         .status(400)
