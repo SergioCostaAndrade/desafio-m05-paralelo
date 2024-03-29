@@ -3,7 +3,7 @@ const knex = require("../conexao");
 const listarProdutos = async (req, res) => {
     const { categoria_id } = req.query;
     let num = 0
-    if (id) {
+    if (categoria_id) {
     num = Number(categoria_id);
     if (!Number.isInteger(num) || num <= 0) {
       return res
