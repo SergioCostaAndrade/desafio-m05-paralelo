@@ -1,6 +1,7 @@
 const knex = require('../conexao');
 
 const listarCliente = async (req, res) => {
+    console.log('listar cliente');
     try {
         const clientes = await knex('clientes').select('*');
         res.status(200).json(clientes);
