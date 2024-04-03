@@ -3,7 +3,8 @@ const knex = require('../conexao')
 const editarCliente = async (req, res) => {
   const { id } = req.params
 
-  const { nome, email, cpf } = req.body
+  const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
+    req.body
 
   if (!nome || !email || !cpf) {
     return res
@@ -41,7 +42,7 @@ const editarCliente = async (req, res) => {
     }
 
     const atualiza = await knex('clientes')
-      .update({ nome, email, cpf })
+      .update({ nome, email, cpf, cep, rua, numero, bairro, cidade, estado })
       .where({ id })
       .returning('*')
 

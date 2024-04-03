@@ -24,11 +24,7 @@ const cadastrarCliente = async (req, res) => {
         .json({ mensagem: "Este CPF já está sendo usado por outro cliente." });
     }
 
-    const novoCliente = await knex("clientes").insert({
-      nome,
-      email,
-      cpf,
-    });
+    const novoCliente = await knex("clientes").insert(req.body);
 
     return res
       .status(201)
