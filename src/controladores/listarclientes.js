@@ -1,7 +1,6 @@
 const knex = require('../conexao');
 
-const listarCliente = async (req, res) => {
-    console.log('listar cliente');
+const listarClientes = async (req, res) => {
     try {
         const clientes = await knex('clientes').select('*');
         res.status(200).json(clientes);
@@ -10,4 +9,4 @@ const listarCliente = async (req, res) => {
     }
 };
 
-module.exports = listarCliente;
+module.exports = listarClientes;
