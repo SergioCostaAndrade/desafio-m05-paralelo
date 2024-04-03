@@ -12,6 +12,7 @@ const editarProduto = require("./controladores/editarproduto");
 const excluirProduto = require("./controladores/excluirproduto");
 const listarProdutos = require("./controladores/listarprodutos");
 const detalharProduto = require("./controladores/detalharproduto");
+const cadastrarCliente = require("./controladores/cadastrarcliente");
 
 const rota = express();
 
