@@ -24,6 +24,7 @@ rota.put("/usuario", editarUsuario);
 rota.post("/produto", cadastrarProduto)
 rota.put('/produto/:id', editarProduto)
 rota.delete('/produto/:id', excluirProduto)
+rota.post("/cliente", cadastrarCliente);
 rota.get("/produto",listarProdutos)
 rota.get("/produto/:id", detalharProduto)
 module.exports = rota;
