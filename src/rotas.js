@@ -14,6 +14,7 @@ const listarProdutos = require('./controladores/listarprodutos')
 const detalharProduto = require('./controladores/detalharproduto')
 const cadastrarCliente = require('./controladores/cadastrarcliente')
 const editarCliente = require('./controladores/editarcliente')
+const listarCliente = require('./controladores/listarclientes')
 
 const rota = express()
 
@@ -30,4 +31,5 @@ rota.post('/cliente', cadastrarCliente)
 rota.get('/produto', listarProdutos)
 rota.get('/produto/:id', detalharProduto)
 rota.put('/cliente/:id', editarCliente)
+rota.get('/cliente', listarCliente)
 module.exports = rota
