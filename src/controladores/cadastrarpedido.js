@@ -21,19 +21,19 @@ const cadastrarPedido = async (req, res) => {
     }
   }
   try {
-    const novoPedido = await knex("pedidos")
-      .insert({
-        cliente_id,
-        observacao,
-        valor_total: valorTotalPedido,
-      })
-      .first();
+    const novoPedido = await knex("pedidos").insert({
+      cliente_id,
+      observacao,
+      valor_total: valorTotalPedido,
+    });
     console.log("tentativa", novoPedido);
     if (novoPedido.rowCount < 1) {
       return res.status(400).json({
         mensagem: "Pedido não cadastrado",
       });
     }
+    const ultimoPedido = await knex("pedidos").orderBy(id).DESC.LIMIT(1);
+    console.log("ultimoPedido", ultimoPedido);
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
