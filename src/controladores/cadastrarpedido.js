@@ -32,7 +32,8 @@ const cadastrarPedido = async (req, res) => {
         mensagem: "Pedido não cadastrado",
       });
     }
-    const ultimoPedido = await knex("pedidos").orderBy(id).DESC.LIMIT(1);
+    const ultimoPedido = await knex("pedidos").orderBy("id", "desc", "first");
+
     console.log("ultimoPedido", ultimoPedido);
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
