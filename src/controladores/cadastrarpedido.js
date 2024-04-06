@@ -8,6 +8,13 @@ const cadastrarPedido = async (req, res) => {
         "Deve ser informado a identificação do cliente para gerar o pedido",
     });
   }
+  let num = 0
+  num = Number(cliente_id);
+  if (!Number.isInteger(num) || num <= 0) {
+    return res
+      .status(400)
+      .json({ mensagem: "Id informado não é inteiro ou é negativo" });
+  }
   try {
     const verificaID = await knex("clientes").where("id", cliente_id).first();
 
