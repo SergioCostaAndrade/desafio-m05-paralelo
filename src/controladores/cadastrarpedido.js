@@ -43,11 +43,9 @@ const cadastrarPedido = async (req, res) => {
       num = 0;
       num = Number(pedidoproduto.produto_id);
       if (!Number.isInteger(num) || num <= 0) {
-        return res
-          .status(400)
-          .json({
-            mensagem: "Id do produto informado não é inteiro ou é negativo",
-          });
+        return res.status(400).json({
+          mensagem: "Id do produto informado não é inteiro ou é negativo",
+        });
       }
       if (!pedidoproduto.quantidade_produto) {
         return res
@@ -57,12 +55,10 @@ const cadastrarPedido = async (req, res) => {
       num = 0;
       num = Number(pedidoproduto.quantidade_produto);
       if (!Number.isInteger(num) || num <= 0) {
-        return res
-          .status(400)
-          .json({
-            mensagem:
-              "Quantidade do produto informada não é inteiro ou é negativo",
-          });
+        return res.status(400).json({
+          mensagem:
+            "Quantidade do produto informada não é inteiro ou é negativo",
+        });
       }
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
@@ -70,6 +66,7 @@ const cadastrarPedido = async (req, res) => {
       if (!verificaID) {
         return res.status(400).json({ messagem: "Produto não identificado" });
       }
+      console.log(verificaID);
     } catch (error) {
       console.log(error);
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
