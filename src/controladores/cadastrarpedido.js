@@ -27,13 +27,16 @@ const cadastrarPedido = async (req, res) => {
       mensagem: "Deve ser informado ao menos um produto para gerar o pedido",
     });
   }
-  console.log(pedido_produtos.length);
   for (const pedidoproduto of pedido_produtos) {
-    console.log(pedidoproduto, "antes do try");
     try {
       console.log("aqui", pedidoproduto.produto_id);
       if (!pedidoproduto.produto_id) {
         return res.status(400).json({ messagem: "Produto não informado" });
+      }
+      if (!pedidoproduto.quantidade_produto) {
+        return res
+          .status(400)
+          .json({ messagem: "Quantidade do produto deve ser informada" });
       }
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
