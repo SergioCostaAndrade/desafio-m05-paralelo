@@ -21,7 +21,7 @@ const cadastrarPedido = async (req, res) => {
     console.log(error.message);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
-  if (!pedido_produtos) {
+  if (pedido_produtos.length < 1) {
     return res
       .status(400)
       .json({
