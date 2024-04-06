@@ -36,7 +36,6 @@ const cadastrarPedido = async (req, res) => {
   }
   for (const pedidoproduto of pedido_produtos) {
     try {
-      console.log("aqui", pedidoproduto.produto_id);
       if (!pedidoproduto.produto_id) {
         return res.status(400).json({ messagem: "Produto não informado" });
       }
@@ -66,7 +65,14 @@ const cadastrarPedido = async (req, res) => {
       if (!verificaID) {
         return res.status(400).json({ messagem: "Produto não identificado" });
       }
-      console.log(verificaID);
+      if (verificaID.quantidade_estoque < pedidoproduto.quantidade_produto) {
+        return res
+          .status(400)
+          .json({
+            messagem:
+              "Quantidade em estoqe insuficiente para atender ao pedido",
+          });
+      }
     } catch (error) {
       console.log(error);
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
