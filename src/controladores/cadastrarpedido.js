@@ -10,11 +10,48 @@ const cadastrarPedido = async (req, res) => {
         .first();
       valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
     }
   }
-  console.log(valorTotalPedido);
-  return res.json(cliente_id, observacao, pedido_produtos);
+  try {
+    const novoPedido = await knex("pedidos").insert({
+      cliente_id,
+      observacao,
+      valor_total: valorTotalPedido,
+    });
+    if (novoPedido.rowCount < 1) {
+      return res.status(400).json({
+        mensagem: "Pedido não cadastrado",
+      });
+    }
+    console.log("id do novo pedido", novoPedido.id);
+    //
+    for (const pedidoproduto of pedido_produtos) {
+      try {
+        const atualizaEstoque = await knex("produtos")
+          .where("id", pedidoproduto.produto_id)
+          .update({
+            quantidade_estoque:
+              quantidade_estoque - pedidoproduto.quantidade_produto,
+          });
+        const novoPedidoProduto = await knex("pedido_produtos").insert({
+          pedido_id: novoPedido.id,
+          produto_id: pedidoproduto.produto_id,
+          quantidade_produto: pedidoproduto.quantidade_produto,
+          valor_produto: atualizaEstoque.valor,
+        });
+        if (novoPedidoProduto.rowCount < 1) {
+          return res.status(400).json({
+            mensagem: "Pedido_Produto não cadastrado",
+          });
+        }
+      } catch (error) {
+        return res.status(500).json({ mensagem: "Erro interno do servidor" });
+      }
+    }
+    return res.json(cliente_id, observacao, pedido_produtos);
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 };
 module.exports = cadastrarPedido;
