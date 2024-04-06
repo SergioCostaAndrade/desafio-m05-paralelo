@@ -19,7 +19,7 @@ const cadastrarPedido = async (req, res) => {
       observacao,
       valor_total: valorTotalPedido,
     });
-    console.log(novoPedido.rowCount);
+    console.log(novoPedido.rowCount, novoPedido.row[0]);
     if (novoPedido.rowCount < 1) {
       return res.status(400).json({
         mensagem: "Pedido não cadastrado",
