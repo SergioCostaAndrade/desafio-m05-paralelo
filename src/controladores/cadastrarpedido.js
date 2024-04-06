@@ -29,6 +29,7 @@ const cadastrarPedido = async (req, res) => {
   }
   for (const pedidoproduto of pedido_produtos) {
     try {
+      console.log("aqui", pedidoproduto.produto_id);
       if (!pedidoproduto.produto_id) {
         return res.status(400).json({ messagem: "Produto não informado" });
       }
