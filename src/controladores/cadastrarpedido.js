@@ -29,6 +29,9 @@ const cadastrarPedido = async (req, res) => {
   }
   for (const pedidoproduto of pedido_produtos) {
     try {
+      if (!pedidoproduto.produto_id) {
+        return res.status(400).json({ messagem: "Produto não informado" });
+      }
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
         .first();
