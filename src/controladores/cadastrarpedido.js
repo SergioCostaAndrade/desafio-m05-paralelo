@@ -38,12 +38,12 @@ const cadastrarPedido = async (req, res) => {
           pedidoproduto.quantidade_produto
         );
         const atualizaEstoque = await knex("produtos")
-          .where("id", pedidoproduto.produto_id)
           .update({
             quantidade_estoque:
               quantidadeProduto[indiceArrayQuantidadeProduto] -
               pedidoproduto.quantidade_produto,
-          });
+          })
+          .where("id", pedidoproduto.produto_id);
         indiceArrayQuantidadeProduto += 1;
         const novoPedidoProduto = await knex("pedido_produtos").insert({
           pedido_id: novoPedido.id,
