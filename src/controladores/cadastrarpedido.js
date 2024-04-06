@@ -31,8 +31,10 @@ const cadastrarPedido = async (req, res) => {
   }
   for (const pedidoproduto of pedido_produtos) {
     try {
+      console.log("teste");
+      console.log(pedidoproduto.produto_id, pedidoproduto);
       const verificaID = await knex("produtos")
-        .where('id', pedidoproduto.produto_id)
+        .where("id", pedidoproduto.produto_id)
         .first();
 
       if (!verificaID) {
