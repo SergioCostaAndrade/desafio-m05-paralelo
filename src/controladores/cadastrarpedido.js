@@ -5,6 +5,7 @@ const cadastrarPedido = async (req, res) => {
   let valorTotalPedido = 0;
   let indiceArrayQuantidadeProduto = 0;
   let quantidadeProduto = [];
+  let valorProduto = [];
   for (const pedidoproduto of pedido_produtos) {
     try {
       const verificaID = await knex("produtos")
@@ -13,6 +14,7 @@ const cadastrarPedido = async (req, res) => {
       valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
       quantidadeProduto[indiceArrayQuantidadeProduto] =
         verificaID.quantidade_produto;
+      valorProduto[indiceArrayQuantidadeProduto] = verificaID.valor;
       indiceArrayQuantidadeProduto += 1;
     } catch (error) {
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
@@ -38,19 +40,19 @@ const cadastrarPedido = async (req, res) => {
           pedidoproduto.quantidade_produto
         );
         //const atualizaEstoque = await knex("produtos")
-         // .update({
-         //   quantidade_estoque:
-         //     quantidadeProduto[indiceArrayQuantidadeProduto] -
-         //     pedidoproduto.quantidade_produto,
-         // })
-         // .where("id", pedidoproduto.produto_id);
-        indiceArrayQuantidadeProduto += 1;
+        // .update({
+        //   quantidade_estoque:
+        //     quantidadeProduto[indiceArrayQuantidadeProduto] -
+        //     pedidoproduto.quantidade_produto,
+        // })
+        // .where("id", pedidoproduto.produto_id);
         const novoPedidoProduto = await knex("pedido_produtos").insert({
           pedido_id: novoPedido.id,
           produto_id: pedidoproduto.produto_id,
           quantidade_produto: pedidoproduto.quantidade_produto,
-          valor_produto: atualizaEstoque.valor,
+          valor_produto: valorProduto[indiceArrayQuantidadeProduto],
         });
+        indiceArrayQuantidadeProduto += 1;
         if (novoPedidoProduto.rowCount < 1) {
           return res.status(400).json({
             mensagem: "Pedido_Produto não cadastrado",
