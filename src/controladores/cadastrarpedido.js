@@ -27,7 +27,9 @@ const cadastrarPedido = async (req, res) => {
       mensagem: "Deve ser informado ao menos um produto para gerar o pedido",
     });
   }
+  console.log(pedido_produtos.length);
   for (const pedidoproduto of pedido_produtos) {
+    console.log(pedidoproduto, "antes do try");
     try {
       console.log("aqui", pedidoproduto.produto_id);
       if (!pedidoproduto.produto_id) {
