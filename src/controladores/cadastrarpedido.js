@@ -26,7 +26,11 @@ const cadastrarPedido = async (req, res) => {
     }
     for (const pedidoproduto of pedido_produtos) {
       try {
-        console.log('dentro atualiza estoque',pedidoproduto.produto_id);
+        console.log(
+          "dentro atualiza estoque",
+          pedidoproduto.produto_id,
+          pedidoproduto.quantidade_produto
+        );
         const atualizaEstoque = await knex("produtos")
           .where("id", pedidoproduto.produto_id)
           .update({
@@ -45,6 +49,7 @@ const cadastrarPedido = async (req, res) => {
           });
         }
       } catch (error) {
+        console.log(error);
         return res.status(500).json({ mensagem: "Erro interno do servidor" });
       }
     }
