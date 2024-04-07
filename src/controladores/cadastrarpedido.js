@@ -74,9 +74,10 @@ const cadastrarPedido = async (req, res) => {
       produtosDoPedido,
     };
     //
-    const cliente = await knex('clientes')
+    const cliente = await knex("clientes").where("id", cliente_id);
+    const texto = "teste de email";
     //
-    console.log(cliente.nome, cliente);
+    console.log(cliente[0].nome, cliente);
     transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente.nome} <${cliente.email}>`,
