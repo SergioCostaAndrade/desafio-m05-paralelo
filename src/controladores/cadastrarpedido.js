@@ -13,8 +13,8 @@ const cadastrarPedido = async (req, res) => {
         .first();
       valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
       quantidadeProduto[indiceArrayQuantidadeProduto] =
-        verificaID.quantidade_produto;
-      valorProduto[indiceArrayQuantidadeProduto] = verificaID.valor;
+        verificaID[0].quantidade_produto;
+      valorProduto[indiceArrayQuantidadeProduto] = verificaID[0].valor;
       indiceArrayQuantidadeProduto += 1;
     } catch (error) {
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
@@ -35,8 +35,11 @@ const cadastrarPedido = async (req, res) => {
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
-        console.log(indiceArrayQuantidadeProduto, quantidadeProduto[indiceArrayQuantidadeProduto],
-          pedidoproduto.quantidade_produto);
+        console.log(
+          indiceArrayQuantidadeProduto,
+          quantidadeProduto[indiceArrayQuantidadeProduto],
+          pedidoproduto.quantidade_produto
+        );
         let novaQuantidadeEstoque =
           quantidadeProduto[indiceArrayQuantidadeProduto] -
           pedidoproduto.quantidade_produto;
