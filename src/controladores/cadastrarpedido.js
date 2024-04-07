@@ -84,7 +84,7 @@ const cadastrarPedido = async (req, res) => {
       subject: "Confirmação do seu pedido de compras",
       text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
       de seu pedido de compraso numero ${ultimoPedido[0].id} \n 
-      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} texto ${texto}`,
+      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} ${texto}`,
     });
     //
     return res.json(apresentaPedido);
