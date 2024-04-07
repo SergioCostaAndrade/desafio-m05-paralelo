@@ -39,6 +39,11 @@ const cadastrarPedido = async (req, res) => {
           quantidadeProduto[indiceArrayQuantidadeProduto] -
           pedidoproduto.quantidade_produto;
         //
+        console.log(
+          "antes atualizar estoque",
+          novaQuantidadeEstoque,
+          pedidoproduto.produto_id
+        );
         atualizaEstoque = await knex("produtos")
           .update("quantidade_estoque", novaQuantidadeEstoque)
           .where("id", pedidoproduto.produto_id);
