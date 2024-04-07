@@ -80,10 +80,11 @@ const cadastrarPedido = async (req, res) => {
     console.log(cliente[0].nome, cliente);
     transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-      to: `${cliente.nome} <${cliente.email}>`,
+      to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
-      text: `Sr(a) ${cliente.nome} você esta recebendo este e-mail como confirmaçãodo "\n" 
-      de seu pedido de compraso texto ${texto}`,
+      text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
+      de seu pedido de compraso numero ${ultimoPedido[0].id} \n 
+      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} texto ${texto}`,
     });
     //
     return res.json(apresentaPedido);
