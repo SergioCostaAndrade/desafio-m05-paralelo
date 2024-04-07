@@ -49,6 +49,7 @@ const cadastrarPedido = async (req, res) => {
         //     pedidoproduto.quantidade_produto,
         // })
         // .where("id", pedidoproduto.produto_id);
+        console.log("antes de insert pedidoproduto", ultimoPedido.id);
         const novoPedidoProduto = await knex("pedido_produtos").insert({
           pedido_id: ultimoPedido.id,
           produto_id: pedidoproduto.produto_id,
@@ -68,6 +69,7 @@ const cadastrarPedido = async (req, res) => {
     }
     return res.json(cliente_id, observacao, pedido_produtos);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
