@@ -6,14 +6,15 @@ const cadastrarPedido = async (req, res) => {
   let indiceArrayQuantidadeProduto = 0;
   let quantidadeProduto = [];
   let valorProduto = [];
+  let produtosDoPedido = [];
   for (const pedidoproduto of pedido_produtos) {
     try {
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
         .first();
       const { quantidade_estoque, valor } = verificaID;
-      console.log("produto", verificaID, quantidade_estoque, valor);
-      valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
+      //
+      valorTotalPedido += pedidoproduto.quantidade_produto * valor;
       quantidadeProduto[indiceArrayQuantidadeProduto] = quantidade_estoque;
       valorProduto[indiceArrayQuantidadeProduto] = valor;
       indiceArrayQuantidadeProduto += 1;
@@ -37,20 +38,10 @@ const cadastrarPedido = async (req, res) => {
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
-        console.log(
-          indiceArrayQuantidadeProduto,
-          quantidadeProduto[indiceArrayQuantidadeProduto],
-          pedidoproduto.quantidade_produto
-        );
         let novaQuantidadeEstoque =
           quantidadeProduto[indiceArrayQuantidadeProduto] -
           pedidoproduto.quantidade_produto;
         //
-        console.log(
-          "antes atualizar estoque",
-          novaQuantidadeEstoque,
-          pedidoproduto.produto_id
-        );
         atualizaEstoque = await knex("produtos")
           .update("quantidade_estoque", novaQuantidadeEstoque)
           .where("id", pedidoproduto.produto_id);
@@ -67,12 +58,21 @@ const cadastrarPedido = async (req, res) => {
             mensagem: "Pedido_Produto não cadastrado",
           });
         }
+        const ultimoPedidoProduto = await knex("pedido_produtos")
+          .orderBy("id", "desc")
+          .limit(1);
+        produtosDoPedido.push(ultimoPedidoProduto);
       } catch (error) {
         console.log(error);
         return res.status(500).json({ mensagem: "Erro interno do servidor" });
       }
     }
-    return res.json(cliente_id, observacao, pedido_produtos);
+    const apresentaPedido = {
+      cliente_id,
+      ultimoPedido,
+      produtosDoPedido,
+    };
+    return res.json(apresentaPedido);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
