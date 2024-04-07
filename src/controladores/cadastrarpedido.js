@@ -11,7 +11,8 @@ const cadastrarPedido = async (req, res) => {
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
         .first();
-      console.log("produto", verificaID, verificaID[0]);
+      const {produto_id, descricao, quantidade_estoque, valor}  = verificaID
+      console.log("produto", verificaID, produto_id, descricao, quantidade_estoque, valor);
       valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
       quantidadeProduto[indiceArrayQuantidadeProduto] =
         verificaID[0].quantidade_produto;
@@ -33,6 +34,7 @@ const cadastrarPedido = async (req, res) => {
       });
     }
     const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
+    //
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
