@@ -35,6 +35,8 @@ const cadastrarPedido = async (req, res) => {
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
+        console.log(indiceArrayQuantidadeProduto, quantidadeProduto[indiceArrayQuantidadeProduto],
+          pedidoproduto.quantidade_produto);
         let novaQuantidadeEstoque =
           quantidadeProduto[indiceArrayQuantidadeProduto] -
           pedidoproduto.quantidade_produto;
