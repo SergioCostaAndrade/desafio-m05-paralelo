@@ -1,4 +1,5 @@
 const knex = require("../conexao");
+const transportador = require("../email");
 
 const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -72,6 +73,17 @@ const cadastrarPedido = async (req, res) => {
       ultimoPedido,
       produtosDoPedido,
     };
+    //
+    const cliente = await knex('clientes')
+    //
+    transportador.sendMail({
+      from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+      to: `${cliente.nome} <${cliente.email}>`,
+      subject: "Confirmação do seu pedido de compras",
+      text: `Sr(a) ${cliente.nome} você esta recebendo este e-mail como confirmaçãodo "\n" 
+      de seu pedido de compraso texto ${texto}`,
+    });
+    //
     return res.json(apresentaPedido);
   } catch (error) {
     console.log(error);
