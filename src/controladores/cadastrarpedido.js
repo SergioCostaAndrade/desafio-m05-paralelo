@@ -11,12 +11,11 @@ const cadastrarPedido = async (req, res) => {
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
         .first();
-      const {produto_id, descricao, quantidade_estoque, valor}  = verificaID
-      console.log("produto", verificaID, produto_id, descricao, quantidade_estoque, valor);
+      const { quantidade_estoque, valor } = verificaID;
+      console.log("produto", verificaID, quantidade_estoque, valor);
       valorTotalPedido += pedidoproduto.quantidade_produto * verificaID.valor;
-      quantidadeProduto[indiceArrayQuantidadeProduto] =
-        verificaID[0].quantidade_produto;
-      valorProduto[indiceArrayQuantidadeProduto] = verificaID[0].valor;
+      quantidadeProduto[indiceArrayQuantidadeProduto] = quantidade_estoque;
+      valorProduto[indiceArrayQuantidadeProduto] = valor;
       indiceArrayQuantidadeProduto += 1;
     } catch (error) {
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
