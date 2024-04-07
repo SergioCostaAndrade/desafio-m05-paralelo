@@ -26,7 +26,6 @@ const cadastrarPedido = async (req, res) => {
       observacao,
       valor_total: valorTotalPedido,
     });
-    console.log("tentativa", novoPedido);
     if (novoPedido.rowCount < 1) {
       return res.status(400).json({
         mensagem: "Pedido não cadastrado",
@@ -51,7 +50,7 @@ const cadastrarPedido = async (req, res) => {
         // })
         // .where("id", pedidoproduto.produto_id);
         const novoPedidoProduto = await knex("pedido_produtos").insert({
-          pedido_id: novoPedido.id,
+          pedido_id: ultimoPedido.id,
           produto_id: pedidoproduto.produto_id,
           quantidade_produto: pedidoproduto.quantidade_produto,
           valor_produto: valorProduto[indiceArrayQuantidadeProduto],
