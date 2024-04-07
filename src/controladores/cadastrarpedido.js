@@ -49,9 +49,9 @@ const cadastrarPedido = async (req, res) => {
         //     pedidoproduto.quantidade_produto,
         // })
         // .where("id", pedidoproduto.produto_id);
-        console.log("antes de insert pedidoproduto", ultimoPedido.id);
+        console.log("antes de insert pedidoproduto", ultimoPedido[0].id);
         const novoPedidoProduto = await knex("pedido_produtos").insert({
-          pedido_id: ultimoPedido.id,
+          pedido_id: ultimoPedido[0].id,
           produto_id: pedidoproduto.produto_id,
           quantidade_produto: pedidoproduto.quantidade_produto,
           valor_produto: valorProduto[indiceArrayQuantidadeProduto],
