@@ -32,24 +32,17 @@ const cadastrarPedido = async (req, res) => {
       });
     }
     const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
-
-    console.log("ultimoPedido", ultimoPedido);
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
       try {
-        console.log(
-          "dentro atualiza estoque",
-          pedidoproduto.produto_id,
-          pedidoproduto.quantidade_produto
-        );
-        //const atualizaEstoque = await knex("produtos")
-        // .update({
-        //   quantidade_estoque:
-        //     quantidadeProduto[indiceArrayQuantidadeProduto] -
-        //     pedidoproduto.quantidade_produto,
-        // })
-        // .where("id", pedidoproduto.produto_id);
-        console.log("antes de insert pedidoproduto", ultimoPedido[0].id);
+        let novaQuantidadeEstoque =
+          quantidadeProduto[indiceArrayQuantidadeProduto] -
+          pedidoproduto.quantidade_produto;
+        //
+        atualizaEstoque = await knex("produtos")
+          .update("quantidade_estoque", novaQuantidadeEstoque)
+          .where("id", pedidoproduto.produto_id);
+        //
         const novoPedidoProduto = await knex("pedido_produtos").insert({
           pedido_id: ultimoPedido[0].id,
           produto_id: pedidoproduto.produto_id,
