@@ -79,10 +79,11 @@ const cadastrarPedido = async (req, res) => {
     const cliente = await knex("clientes").where("id", cliente_id);
     const texto = "Segue a lista de produtos comprados";
     let lista = "";
-    //for (let i = 0; i < descricaoProduto.length; i++) {
-    //  lista = descricaoProduto[i] + ' ' + pedido_produtos[i].quantidade_produto + ' ' +
-    //  valorProduto[i] + '\n';
-    //}
+    console.log(descricaoProduto.lengt);
+    for (let i = 0; i < descricaoProduto.length; i++) {
+      lista = descricaoProduto[i] + ' ' + pedido_produtos[i].quantidade_produto + ' ' +
+      valorProduto[i] + '\n';
+    }
 
     console.log(`Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
     de seu pedido de compras numero ${ultimoPedido[0].id} \n 
