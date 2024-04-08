@@ -120,7 +120,7 @@ const cadastrarPedido = async (req, res) => {
     );
     //
     transportador.sendMail({
-      from: `${"Equipe Atrasados e Unidos"} <${"scandrade@cubosacademy.com"}>`,
+      from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
       text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
