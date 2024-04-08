@@ -119,6 +119,7 @@ const cadastrarPedido = async (req, res) => {
       "cadastrar pedido cade"
     );
     //
+    try {
     transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
@@ -130,6 +131,10 @@ const cadastrarPedido = async (req, res) => {
        ${cabecalho} \n
       ${listaDeCompras}`,
     });
+  } catch(error) {
+    console.log(error);
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
     //
     return res.status(201).json(apresentaPedido);
   } catch (error) {
