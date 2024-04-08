@@ -1,5 +1,5 @@
 const knex = require("../conexao");
-const transportador = require("../../email");
+const transportador = require("../email");
 
 const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -79,13 +79,11 @@ const cadastrarPedido = async (req, res) => {
     console.log(`Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
     de seu pedido de compras numero ${ultimoPedido[0].id} \n 
     Valor total do pedido - R$ ${ultimoPedido[0].valor_total} ${texto}`);
-    console.log(process.env.EMAIL_HOST, process.env.EMAIL_PORT,
-      process.env.EMAIL_USER,process.env.EMAIL_PASS,
-      process.env.EMAIL_NAME,
-      process.env.EMAIL_FROM);
+    //EMAIL_NAME=Equipe Atrasados e Unidos
+    //EMAIL_FROM=scandrade@cubosacademy.com
     //
     transportador.sendMail({
-      from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+      from: `${"Equipe Atrasados e Unidos"} <${"scandrade@cubosacademy.com"}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
       text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
