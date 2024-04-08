@@ -91,13 +91,6 @@ const cadastrarPedido = async (req, res) => {
         valorProduto[i] +
         "\n";
     }
-
-    console.log(`Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
-    de seu pedido de compras numero ${ultimoPedido[0].id} \n 
-    Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
-     ${texto} \n 
-     ${cabecalho} \n
-    ${listaDeCompras}`);
     await transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
