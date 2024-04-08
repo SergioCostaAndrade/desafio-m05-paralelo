@@ -1,5 +1,5 @@
 const knex = require("../conexao");
-const transportador = require("../email");
+const transportador = require("../../email");
 
 const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
