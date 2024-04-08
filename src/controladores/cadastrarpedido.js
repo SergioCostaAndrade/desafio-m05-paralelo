@@ -78,6 +78,7 @@ const cadastrarPedido = async (req, res) => {
     //
     const cliente = await knex("clientes").where("id", cliente_id);
     const texto = "Segue a lista de produtos comprados";
+    const cabecalho = "Descricao      Quantidade  Valor"
     let listaDeCompras = "";
     console.log(descricaoProduto.lengt);
     for (let i = 0; i < descricaoProduto.length; i++) {
@@ -95,6 +96,7 @@ const cadastrarPedido = async (req, res) => {
     de seu pedido de compras numero ${ultimoPedido[0].id} \n 
     Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
      ${texto} \n 
+     ${cabecalho} \n
     ${listaDeCompras}`);
     //EMAIL_NAME=Equipe Atrasados e Unidos
     //EMAIL_FROM=scandrade@cubosacademy.com
