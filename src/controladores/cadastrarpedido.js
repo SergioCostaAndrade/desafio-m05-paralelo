@@ -76,6 +76,13 @@ const cadastrarPedido = async (req, res) => {
     //
     const cliente = await knex("clientes").where("id", cliente_id);
     const texto = "teste de email";
+    console.log(`Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
+    de seu pedido de compras numero ${ultimoPedido[0].id} \n 
+    Valor total do pedido - R$ ${ultimoPedido[0].valor_total} ${texto}`);
+    console.log(process.env.EMAIL_HOST, process.env.EMAIL_PORT,
+      process.env.EMAIL_USER,process.env.EMAIL_PASS,
+      process.env.EMAIL_NAME,
+      process.env.EMAIL_FROM);
     //
     transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
