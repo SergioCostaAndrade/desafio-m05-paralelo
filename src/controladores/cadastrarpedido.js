@@ -126,7 +126,7 @@ const cadastrarPedido = async (req, res) => {
       Valor total do pedido - R$ ${ultimoPedido[0].valor_total} ${texto}`,
     });
     //
-    return res.json(apresentaPedido);
+    return res.status(201).json(apresentaPedido);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
