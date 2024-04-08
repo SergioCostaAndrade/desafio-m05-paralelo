@@ -77,6 +77,7 @@ const cadastrarPedido = async (req, res) => {
     };
     //
     const cliente = await knex("clientes").where("id", cliente_id);
+    //
     const texto = "Segue a lista de produtos comprados";
     const cabecalho = "Descricao      Quantidade  Valor"
     let listaDeCompras = "";
@@ -125,7 +126,10 @@ const cadastrarPedido = async (req, res) => {
       subject: "Confirmação do seu pedido de compras",
       text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
       de seu pedido de compras numero ${ultimoPedido[0].id} \n 
-      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} ${texto}`,
+      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
+       ${texto} \n 
+       ${cabecalho} \n
+      ${listaDeCompras}`,
     });
     //
     return res.status(201).json(apresentaPedido);
