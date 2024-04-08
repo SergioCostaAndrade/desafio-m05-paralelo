@@ -116,7 +116,7 @@ const cadastrarPedido = async (req, res) => {
       "cadastrar pedido cade"
     );
     //
-    transportador.sendMail({
+    const teste = await transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
@@ -127,7 +127,7 @@ const cadastrarPedido = async (req, res) => {
        ${cabecalho} \n
       ${listaDeCompras}`,
     });
-  
+  console.log(teste);
     //
     return res.status(201).json(apresentaPedido);
   } catch (error) {
