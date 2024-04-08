@@ -98,7 +98,7 @@ const cadastrarPedido = async (req, res) => {
      ${texto} \n 
      ${cabecalho} \n
     ${listaDeCompras}`);
-    transportador.sendMail({
+    await transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
