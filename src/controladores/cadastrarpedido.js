@@ -7,17 +7,19 @@ const cadastrarPedido = async (req, res) => {
   let indiceArrayQuantidadeProduto = 0;
   let quantidadeProduto = [];
   let valorProduto = [];
+  let descricaoProduto = [];
   let produtosDoPedido = [];
   for (const pedidoproduto of pedido_produtos) {
     try {
       const verificaID = await knex("produtos")
         .where("id", pedidoproduto.produto_id)
         .first();
-      const { quantidade_estoque, valor } = verificaID;
+      const { quantidade_estoque, valor, descricao } = verificaID;
       //
       valorTotalPedido += pedidoproduto.quantidade_produto * valor;
       quantidadeProduto[indiceArrayQuantidadeProduto] = quantidade_estoque;
       valorProduto[indiceArrayQuantidadeProduto] = valor;
+      descricaoProduto[indiceArrayQuantidadeProduto] = descricao;
       indiceArrayQuantidadeProduto += 1;
     } catch (error) {
       return res.status(500).json({ mensagem: "Erro interno do servidor" });
@@ -76,14 +78,22 @@ const cadastrarPedido = async (req, res) => {
     //
     const cliente = await knex("clientes").where("id", cliente_id);
     const texto = "Segue a lista de produtos comprados";
+    let lista = "";
+    for (let i = 0; i < descricaoProduto.length; i++) {
+      lista = descricaoProduto[i] + ' ' + pedido_produtos[i].quantidade_produto + ' ' +
+      valorProduto[i] + '\n';
+    }
+
     console.log(`Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
     de seu pedido de compras numero ${ultimoPedido[0].id} \n 
     Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
-     ${texto}`);
+     ${texto} \n 
+    ${lista}`);
     //EMAIL_NAME=Equipe Atrasados e Unidos
     //EMAIL_FROM=scandrade@cubosacademy.com
     //
-    console.log(process.env.HOST_PORT,
+    console.log(
+      process.env.HOST_PORT,
       process.env.KEY_DEVWEBTOKEN,
       process.env.DB_HOST,
       process.env.DB_PORT,
@@ -95,7 +105,9 @@ const cadastrarPedido = async (req, res) => {
       process.env.EMAIL_USER,
       process.env.EMAIL_PASS,
       process.env.EMAIL_NAME,
-      process.env.EMAIL_FROM, 'cadastrar pedido');
+      process.env.EMAIL_FROM,
+      "cadastrar pedido"
+    );
     //
     transportador.sendMail({
       //from: `${"Equipe Atrasados e Unidos"} <${"scandrade@cubosacademy.com"}>`,
