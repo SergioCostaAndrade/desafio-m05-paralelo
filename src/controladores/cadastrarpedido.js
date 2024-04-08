@@ -95,7 +95,7 @@ const cadastrarPedido = async (req, res) => {
     de seu pedido de compras numero ${ultimoPedido[0].id} \n 
     Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
      ${texto} \n 
-    ${lista}`);
+    ${listaDeCompras}`);
     //EMAIL_NAME=Equipe Atrasados e Unidos
     //EMAIL_FROM=scandrade@cubosacademy.com
     //
