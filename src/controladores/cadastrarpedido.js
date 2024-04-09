@@ -95,11 +95,11 @@ const cadastrarPedido = async (req, res) => {
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${cliente[0].nome} <${cliente[0].email}>`,
       subject: "Confirmação do seu pedido de compras",
-      text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \n 
-      seu pedido de compras numero ${ultimoPedido[0].id}. \n 
-      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \n
-       ${texto} \n 
-       ${cabecalho} \n
+      text: `Sr(a) ${cliente[0].nome} você esta recebendo este e-mail como confirmação do \r\n 
+      seu pedido de compras numero ${ultimoPedido[0].id}. \r\n 
+      Valor total do pedido - R$ ${ultimoPedido[0].valor_total} \r\n
+       ${texto} \r\n 
+       ${cabecalho} \r\n
       ${listaDeCompras}`,
     });
     return res.status(201).json(apresentaPedido);
