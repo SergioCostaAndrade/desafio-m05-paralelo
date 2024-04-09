@@ -1,7 +1,7 @@
 const knex = require("../conexao");
 
 const validarExclusaoProduto = async (req, res, next) => {
-    const { produto_id } = req.body;
+    const { produto_id } = req.params;
 
     if (!produto_id) {
         return res.status(400).json({
