@@ -79,7 +79,7 @@ const cadastrarPedido = async (req, res) => {
     const cliente = await knex("clientes").where("id", cliente_id);
     //
     const texto = "Segue a lista de produtos comprados:";
-    const cabecalho = "Descricao      Quantidade  Valor"
+    const cabecalho = "Descricao      Quantidade  Valor";
     let listaDeCompras = "";
     for (let i = 0; i < descricaoProduto.length; i++) {
       listaDeCompras =
@@ -89,7 +89,8 @@ const cadastrarPedido = async (req, res) => {
         pedido_produtos[i].quantidade_produto +
         "           " +
         valorProduto[i] +
-        "\r\n" + "           ";
+        "\r\n" +
+        "          ";
     }
     await transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
