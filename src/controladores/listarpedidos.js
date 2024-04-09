@@ -7,19 +7,17 @@ const listarPedidos = async (req, res) => {
         "pedido.id as pedido_id",
         "pedido.valor_total",
         "pedido.observacao",
-        "pedido.cliente_id"
+        "pedido.cliente_id",
+        "pedido_produto.id as produto_id",
+        "pedido_produto.quantidade_produto",
+        "pedido_produto.valor_produto"
       )
       .leftJoin(
-        "pedido_produtos as pedido_de_produto",
+        "pedido_produtos as pedido_produto",
         "pedido.id",
-        "pedido_de_produto.pedido_id"
+        "pedido_produto.pedido_id"
       )
-      .leftJoin(
-        "produtos as produto",
-        "pedido_de_produto.produto_id",
-        "produto.id"
-      )
-      .groupBy("pedido.id")
+      .groupBy("pedido.id", "pedido_produto.id")
       .orderBy("pedido.id");
 
     const { cliente_id } = req.query;
@@ -54,11 +52,10 @@ const listarPedidos = async (req, res) => {
           .filter((item) => item.pedido_id === pedido.pedido_id)
           .map((item) => {
             return {
-              id: item.id,
+              id: item.produto_id,
               quantidade_produto: item.quantidade_produto,
               valor_produto: item.valor_produto,
               pedido_id: item.pedido_id,
-              produto_id: item.produto_id,
             };
           }),
       };
