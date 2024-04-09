@@ -19,6 +19,7 @@ const detalharCliente = require("./controladores/detalharcliente");
 const cadastrarPedido = require("./controladores/cadastrarpedido");
 const validarPedido = require("./middwares/validarPedido");
 const listarPedidos = require("./controladores/listarpedidos");
+const validarExclusaoProduto = require("./middwares/validarExclusaoProduto");
 
 const rota = express();
 
@@ -30,7 +31,7 @@ rota.get("/usuario", detalharUsuario);
 rota.put("/usuario", editarUsuario);
 rota.post("/produto", cadastrarProduto);
 rota.put("/produto/:id", editarProduto);
-rota.delete("/produto/:id", excluirProduto);
+rota.delete("/produto/:id", validarExclusaoProduto, excluirProduto);
 rota.post("/cliente", cadastrarCliente);
 rota.get("/cliente", listarClientes);
 rota.get("/produto", listarProdutos);
