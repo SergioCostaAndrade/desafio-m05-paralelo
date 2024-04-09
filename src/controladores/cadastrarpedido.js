@@ -87,10 +87,10 @@ const cadastrarPedido = async (req, res) => {
         descricaoProduto[i] +
         "   " +
         pedido_produtos[i].quantidade_produto +
-        "           " +
+        "          " +
         valorProduto[i] +
         "\r\n" +
-        "          ";
+        "           ";
     }
     await transportador.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
