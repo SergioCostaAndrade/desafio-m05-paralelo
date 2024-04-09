@@ -1,9 +1,9 @@
 const knex = require("../conexao");
 
 const validarExclusaoProduto = async (req, res, next) => {
-    const { produto_id } = req.params;
+    const { id } = req.params;
 
-    if (!produto_id) {
+    if (!id) {
         return res.status(400).json({
             mensagem: "É necessário informar o ID do produto a ser excluído",
         });
@@ -12,7 +12,7 @@ const validarExclusaoProduto = async (req, res, next) => {
     try {
         // Verifica se o produto está vinculado a algum pedido
         const pedidosComProduto = await knex("pedido_produtos")
-            .where("produto_id", produto_id)
+            .where("produto_id", id)
             .select("pedido_id");
 
         if (pedidosComProduto.length > 0) {
