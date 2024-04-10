@@ -34,9 +34,10 @@ const cadastrarPedido = async (req, res) => {
     if (novoPedido.rowCount < 1) {
       return res.status(400).json({
         mensagem: "Pedido não cadastrado",
-      });
+      }).returning(*);
     }
-    const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
+    console.log(novoPedido);
+    //const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
     //
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
