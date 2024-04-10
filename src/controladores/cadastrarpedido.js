@@ -39,7 +39,7 @@ const cadastrarPedido = async (req, res) => {
       });
     }
     console.log(novoPedido);
-    //const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
+    const ultimoPedido = await knex("pedidos").orderBy("id", "desc").limit(1);
     //
     indiceArrayQuantidadeProduto = 0;
     for (const pedidoproduto of pedido_produtos) {
@@ -95,6 +95,7 @@ const cadastrarPedido = async (req, res) => {
         "\r\n" +
         "            ";
     }
+    console.log('antes');
     //await transportador.sendMail({
     //  from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
     //  to: `${cliente[0].nome} <${cliente[0].email}>`,
