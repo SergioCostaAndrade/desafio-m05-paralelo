@@ -2,29 +2,26 @@ const knex = require("../conexao");
 
 const listarProdutos = async (req, res) => {
     const { categoria_id } = req.query;
-    let num = 0
     if (categoria_id) {
-    num = Number(categoria_id);
-    if (!Number.isInteger(num) || num <= 0) {
-      return res
-        .status(400)
-        .json({ mensagem: "Id informado não é inteiro ou é negativo" });
-    }
+        const numCategoria = Number(categoria_id);
+        if (!Number.isInteger(numCategoria) || numCategoria <= 0) {
+            return res.status(400).json({ mensagem: "O ID da categoria informado não é um número inteiro positivo." });
+        }
     }
     try {
-      if (num > 0) {
-        const listarProdutos = await knex("produtos").where({ categoria_id });
-        if (listarProdutos.length < 1) {
-          return res.status(200).json({ mensagem: "Produtos não encontrados para a Categoria informada" });
+        let produtos;
+        if (categoria_id) {
+            produtos = await knex("produtos").where({ categoria_id });
         } else {
-          return res.status(200).json(listarProdutos);
+            produtos = await knex("produtos");
         }
-      } else {
-        const listarProdutos = await knex("produtos");
-        return res.status(200).json(listarProdutos);
-      }
-    } catch (error){
-      return res.status(500).json({ mensgem: "Erro interno do servidor" });
+        if (produtos.length === 0) {
+            return res.status(400).json({ mensagem: "Nenhum produto encontrado." });
+        }
+        return res.status(200).json(produtos);
+    } catch (error) {
+        return res.status(500).json({ mensagem: "Erro interno do servidor" });
     }
-  };
+};
+
 module.exports = listarProdutos;

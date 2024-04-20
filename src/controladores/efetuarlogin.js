@@ -29,7 +29,6 @@ const efetuarLogin = async (req, res) => {
 
     res.json({ dadosUsuario, token });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ mensagem: 'Erro interno do servidor' });
   }
 };

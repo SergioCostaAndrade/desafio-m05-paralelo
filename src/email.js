@@ -9,3 +9,4 @@ const transportador = nodemailer.createTransport({
 });
 
 module.exports = transportador;
+

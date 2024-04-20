@@ -8,7 +8,6 @@ const cadastrarCliente = async (req, res) => {
       .status(400)
       .json({ mensagem: "Todos os campos são obrigatórios." });
   }
-
   try {
     const emailExistente = await knex("clientes").where("email", email).first();
     if (emailExistente) {
@@ -16,21 +15,20 @@ const cadastrarCliente = async (req, res) => {
         mensagem: "Este e-mail já está sendo usado por outro cliente.",
       });
     }
-
     const cpfExistente = await knex("clientes").where("cpf", cpf).first();
     if (cpfExistente) {
       return res
         .status(400)
         .json({ mensagem: "Este CPF já está sendo usado por outro cliente." });
     }
-
-    const novoCliente = await knex("clientes").insert(req.body);
-
+    const [idCliente] = await knex("clientes").insert({ nome, email, cpf }).returning('id');
     return res
       .status(201)
-      .json({ mensagem: "Cliente cadastrado com sucesso!" });
+      .json({ id: idCliente, mensagem: "Cliente cadastrado com sucesso!" });
+      
   } catch (error) {
-    return res.status(500).json({ mensagem: error.message });
+    console.log(error)
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
 
