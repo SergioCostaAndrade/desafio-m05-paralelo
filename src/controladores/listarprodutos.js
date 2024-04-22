@@ -13,10 +13,10 @@ const listarProdutos = async (req, res) => {
         let produtos;
         if (categoria_id) {
             produtos = await knex("produtos").where({ categoria_id })
-            .orderBy(id);
+         //   .orderBy(id);
         } else {
             produtos = await knex("produtos")
-            .orderBy(id);
+           // .orderBy(id);
         }
         if (produtos.length === 0) {
             return res.status(400).json({ mensagem: "Nenhum produto encontrado." });
